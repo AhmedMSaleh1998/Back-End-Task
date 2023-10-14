@@ -11,28 +11,26 @@
 </head>
 <body class="bg-dark">  --}}
 
-<div class="container mt-5 w-25 p-3">
-  <h2 class="text-center text-dark">Post Create</h2>
-  <form method="post" action="{{ route('posts.store') }}">
-    @csrf
-    <div class="mb-3 mt-3">
-        @include('inc.errors')
-      <label for="name" class="text-dark">post Name:</label>
-      <input type="name" class="form-control" id="name" placeholder="Enter Post title" name="name">
-      <textarea class="form-control" id="content" placeholder="Enter Post content" name="content"></textarea>
-      <div class="mb-3">
-        <label for="category" class="text-dark">category:</label>
-        <select id="category" name="category">
-            <option value=""> Choose category ...</option>
-            @foreach ($categories as $category )
-            <option value="{{$category->id}}"> {{$category->name}}</option>
-             @endforeach
-        </select>
-    </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-</div>
+    <div class="container mt-5 w-25 p-3">
+        <h2 class="text-center text-dark">Product Create</h2>
+        <form method="post" action="{{ route('admin.products.store') }}" enctype="multipart/form-data">
+            @include('inc.errors')
+          @csrf
+          <div class="mb-3 mt-3">
+            <label for="name" class="text-dark">Product Name:</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter Product Name" name="name">
+          </div>
+          <div class="mb-3 mt-3">
+          <label for="description" class="text-dark">Product Name:</label>
+          <input type="text" class="form-control" id="description" placeholder="Enter Product description" name="description">
+        </div>
+        <div class="mb-3 mt-3">
+          <label for="name" class="text-dark">Product Name:</label>
+          <input type="file" class="form-control" id="image" placeholder="Enter Product image" name="image">
+        </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
 </div>
 </body>
 </html>

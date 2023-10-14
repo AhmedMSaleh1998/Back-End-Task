@@ -11,37 +11,27 @@
 </head>
 <body class="bg-dark">  --}}
 
-<div class="container mt-5 w-25 p-3">
-  <h2 class="text-center text-dark">Post Edit</h2>
-  <form method="post" action="{{ route('posts.update',$post->id) }}">
-    @csrf
-    @method('put')
-    <div class="mb-3 mt-3">
-        @include('inc.errors')
-      <label for="name" class="text-dark">Post <title></title>:</label>
-      <input type="name" class="form-control" id="title" placeholder="Enter post title" name="title" value= {{old('title')?old('title'):$post->title}}>
-    </div>
-    <div class="mb-3">
-        <label for="categories" class="text-dark">categories:</label>
-        @if(old('category_id'))
-        <select id="category" name="category_id">
-            <option value=""> Choose categoy ...</option>
-            @foreach ($categories as $category )
-            <option  value="{{$category->id}}" @if(old('category_id') == $category->id )  selected @endif >{{ $category->name }}</option>
-            @endforeach
-        </select>
-        @else
-        <select id="governorate" name="category_id">
-            <option value=""> Choose bloodType ...</option>
-            @foreach ($categories as $category )
-            <option  value="{{$category->id}}" @if( $category->id  == $post->category_id)  selected @endif >{{ $category->name }}</option>
-            @endforeach
-        </select>
-        @endif
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-  </form>
-</div>
+    <div class="container mt-5 w-25 p-3">
+        <h2 class="text-center text-dark">Product Edit</h2>
+        <form method="post" action="{{ route('admin.products.update' , $product->id) }}" enctype="multipart/form-data">
+            @include('inc.errors')
+          @csrf
+          <div class="mb-3 mt-3">
+            <label for="name" class="text-dark">Product Name:</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter Product Name" name="name" value={{ old('name') ? old('name') : $product->name }}>
+          </div>
+          <div class="mb-3 mt-3">
+          <label for="description" class="text-dark">Product description:</label>
+          <input type="text" class="form-control" id="description" placeholder="Enter Product description" name="description" value={{ old('description') ? old('description') : $product->description }}>
+        </div>
+        <div class="mb-3 mt-3">
+          <label for="name" class="text-dark">Product Image:</label>
+          <img src="{{asset('images/products/' . $product->image)}}" width="100px"/>
+          <input type="file" class="form-control" id="image" placeholder="Enter Product image" name="image">
+        </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
 </div>
 </body>
 </html>

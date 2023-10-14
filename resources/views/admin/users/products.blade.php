@@ -2,6 +2,7 @@
 @section('content')
 <html>
 <head>
+    <title>Laravel Datatables Tutorial</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>
     <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
@@ -11,16 +12,13 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h2 class="mb-4">Users</h2>
-    <a class="btn btn-info" href="{{route('admin.users.create')}}">Create User</a>
-    <table id="USER" class="table table-bordered">
+    <h2 class="mb-4">User Products</h2>
+    <table id="myTable" class="table table-bordered">
         <thead>
             <tr>
                 <th>No</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Phone</th>
+                <th>Name</th>
+                <th>Description</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -32,16 +30,14 @@
 </body>
 <script type="text/javascript">
     $(function () {
-          var table = $('#USER').DataTable({
+          var table = $('#myTable').DataTable({
               processing: true,
               serverSide: true,
-              ajax: "{{ route('admin.users.index') }}",
+              ajax: "{{ route('admin.user.products') }}",
               columns: [
                   {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                  {data: 'firstname', name: 'firstname'},
-                  {data: 'lastname', name: 'lastname'},
-                  {data: 'email', name: 'email'},
-                  {data: 'phone', name: 'phone'},
+                  {data: 'name', name: 'name'},
+                  {data: 'description', name: 'description'},
                   {data: 'action', name: 'action', orderable: false, searchable: false},
           ],
           });

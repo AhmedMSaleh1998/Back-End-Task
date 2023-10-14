@@ -2,14 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\AddproductRequest;
-use App\Http\Requests\EditProductRequest;
+use App\Http\Controllers\BaseController;
+use App\Http\Requests\Admin\AddproductRequest;
+use App\Http\Requests\Admin\EditProductRequest;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
+use App\Services\ProductService;
 
-class ProductController extends Controller
+class ProductController extends BaseController
 {
+
+    public function __construct(ProductService $service)
+    {
+        parent::__construct($service);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,8 +25,20 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return view('admin.product.index',compact('products'));
+        if(\request()->ajax()){
+            $data = Product::all();
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                        $btn = '<a href="edit/'.$row->id.'" class="edit btn btn-info btn-sm">Edit</a>';
+                           $btn = $btn.'<a href="delete/'.$row->id.'" class="delete btn btn-danger btn-sm">Delete</a>';
+                            return $btn;
+
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('admin.product.index');
     }
 
     /**
@@ -28,8 +48,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Product::all();
-        return view('admin.product.create',compact('categories'));
+        return view('admin.product.create');
     }
 
     /**
@@ -40,21 +59,10 @@ class ProductController extends Controller
      */
     public function store(AddproductRequest $request)
     {
-        $product = $request->validated();
-        Product::create($product);
-        return redirect(route('products.index'));
+        $this->service->store($request);
+        return redirect(route('admin.products.index'))->with(['success' => 'Product Created successfully']);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -64,9 +72,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::find($id);
-        $categories = Product::all();
-        return view('admin.product.edit',compact('product','categories'));
+        $product = $this->service->find('id',$id);
+        return view('admin.product.edit',compact('product'));
     }
 
     /**
@@ -76,12 +83,15 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update( EditProductRequest $request, $id)
+    public function update(EditProductRequest $request, $id)
     {
-        $product = Product::find($id);
-        $productEdited = $request->validated();
-        $product->update($productEdited);
-        return redirect(route('products.index'));
+        try{
+            $data = $this->service->update($request , $id);
+            return redirect(route('admin.products.index'))->with(['success' => 'Product Updated Successfully']);
+
+        } catch (Exception $exception) {
+            return $exception;
+        }
     }
 
     /**
@@ -90,10 +100,17 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+     /**
+     * Remove the specified resource from storage.
+     */
+    public function delete($id)
     {
-        $product = Product::find($id);
-        $product->delete();
-        return redirect(route('products.index'));
+        try{
+            $data = $this->service->destroy($id);
+            return redirect(route('admin.products.index'))->with(['success' => 'Product Deleted Successfully']);
+
+        } catch (Exception $exception) {
+            return $exception;
+        }
     }
 }

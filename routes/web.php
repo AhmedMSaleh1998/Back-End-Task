@@ -19,21 +19,23 @@ Route::post('admin/handlelogin', 'AdminController@handleLogin')->name('admin.han
 
 Route::group(['middleware' => ['auth:admin']], function() {
     Route::group(['prefix' => 'user'], function () {
-    Route::get('/index', 'AdminController@index')->name('admin.index');
-    Route::get('/users/index', 'UserController@index')->name('admin.users.index');
-    Route::get('/users/create', 'AdminController@create')->name('admin.users.create');
-    Route::get('/users/store', 'AdminController@store')->name('admin.users.store');
-    Route::get('/users/edit', 'AdminController@edit')->name('admin.users.edit');
-    Route::get('/users/delete', 'AdminController@delete')->name('admin.users.delete');
+    Route::get('/index', 'UserController@index')->name('admin.users.index');
+    Route::get('/create', 'UserController@create')->name('admin.users.create');
+    Route::post('/store', 'UserController@store')->name('admin.users.store');
+    Route::get('/show/{id}', 'UserController@show')->name('admin.users.show');
+    Route::get('/edit/{id}', 'UserController@edit')->name('admin.users.edit');
+    Route::post('/update/{id}', 'UserController@update')->name('admin.users.update');
+    Route::delete('/delete/{id}', 'UserController@delete')->name('admin.users.delete');
+    Route::get('/products/{id}', 'UserController@products')->name('admin.users.products');
   });
-
+  Route::get('/index', 'productController@index')->name('admin.index');
   Route::group(['prefix' => 'product'], function () {
-    Route::get('/index', 'productController@index')->name('admin.index');
-    Route::get('/products/index', 'productController@index')->name('admin.products.index');
-    Route::get('/products/create', 'productController@create')->name('admin.products.create');
-    Route::get('/products/store', 'productController@store')->name('admin.products.store');
-    Route::get('/products/edit', 'productController@edit')->name('admin.products.edit');
-    Route::get('/products/delete', 'productController@delete')->name('admin.products.delete');
+    Route::get('/index', 'productController@index')->name('admin.products.index');
+    Route::get('/create', 'productController@create')->name('admin.products.create');
+    Route::post('/store', 'productController@store')->name('admin.products.store');
+    Route::get('/edit/{id}', 'productController@edit')->name('admin.products.edit');
+    Route::post('/update/{id}', 'productController@update')->name('admin.products.update');
+    Route::delete('/delete/{id}', 'productController@delete')->name('admin.products.delete');
   });
 
 });

@@ -54,7 +54,6 @@ abstract class BaseRepository implements IRepository
         return DB::transaction(function () use ($data , $id) {
             return $this->model->where('id', $id)->update($data);
         });
-
     }
 
     public function show($id)

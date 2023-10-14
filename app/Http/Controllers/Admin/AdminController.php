@@ -10,9 +10,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Yajra\Datatables\Datatables;
 
 class AdminController extends Controller
 {
+    public function __construct(ProductService $service)
+    {
+        parent::__construct($service);
+    }
+
     public function login(){
         return view('admin.auth.login');
     }

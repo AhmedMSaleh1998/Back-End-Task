@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AdminLTE 3 | Dashboard</title>
-
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -25,6 +24,7 @@
   <link rel="stylesheet" href={{ asset("plugins/daterangepicker/daterangepicker.css")}}>
   <!-- summernote -->
   <link rel="stylesheet" href={{ asset("plugins/summernote/summernote-bs4.min.css")}}>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -219,18 +219,6 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{route('admin.users.create')}}" class="nav-link">
-                    <i class="fa fa-plus"></i>
-                    <p>create</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{route('admin.users.edit')}}" class="nav-link">
-                      <i class="fa fa-pen"></i>
-                      <p>edit</p>
-                    </a>
-                  </li>
-                <li class="nav-item">
                   <a href="{{route('admin.users.index')}}" class="nav-link">
                     <i class="fa fa-eye"></i>
                     <p>view</p>
@@ -247,18 +235,6 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="{{route('admin.products.create')}}" class="nav-link">
-                    <i class="fa fa-plus"></i>
-                    <p>create</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{route('admin.products.edit')}}" class="nav-link">
-                      <i class="fa fa-pen"></i>
-                      <p>edit</p>
-                    </a>
-                  </li>
                 <li class="nav-item">
                   <a href="{{route('admin.products.index')}}" class="nav-link">
                     <i class="fa fa-eye"></i>

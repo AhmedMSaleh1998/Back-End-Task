@@ -149,4 +149,10 @@ class UserService extends BaseService
         $user = Auth::user();
         return ProductResource::collection($user->products);
     }
+
+    public function update($request , $id){
+        $oldProductData = $this->repository->find('id' , $id);
+        $newProductData = $request->all();
+        $data = $oldProductData->update($newProductData);
+    }
 }

@@ -22,6 +22,16 @@ class ProductService extends BaseService
         $this->userRepository = $userRepository;
     }
 
+    public function store($request){
+        $newProductData = $request->all();
+            if($request->has('image')){
+                    $name  = time() . '.' . $request['image']->extension();
+                    $newProductData['image']->move(public_path('images/products'), $name);
+                    $newProductData['image'] = $name;
+            }
+             $this->repository->store($newProductData);
+    }
+
     public function update($request , $id){
         $oldProductData = $this->repository->find('id' , $id);
         $newProductData = $request->all();

@@ -1,68 +1,48 @@
 @extends('admin.layout.layout')
 @section('content')
-<!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            <div class="card">
-              <div class="card-header">
-              <a></a>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="example2" class="table table-bordered table-hover">
-                  <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>image</th>
-                    <th colspan="2" class="text text-center">action</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    @foreach ($products as $product )
-                  <tr>
-                    <td>{{ $product->name }}</td>
-                    <td>{{ $product->description }}</td>
-                    <td><img src="{{asset('images/products/' . $product->image)}}" width="100px"</td>
-                    <td class="text text-center"><a href="{{ route('admin.products.edit',$product->id) }}" class="btn btn-success">Edit</a></td>
-                    <form action="{{ route('admin.products.delete',$product->id) }}" method="product">
-                      @csrf
-                      @method('DELETE')
-                    <td class="text text-center"><button type="submit" class="btn btn-danger">Delete</button></td>
-                    </form>
-                  </tr>
-                  </tr>
-                  @endforeach
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
-      @push('scripts')
-    {{--  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  --}}
-<script>
-   $(document).ready(function() {
+<html>
+<head>
+    <title>Laravel Datatables Tutorial</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"/>
+    <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="mb-4">Products</h2>
+    <a class="btn btn-info" href="{{route('admin.products.create')}}">Create Product</a>
+    <table id="myTable" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
 
-    $('#governorate').change(function() {
-      //  consol.log(123);
-
-        $('#cities option[data-governorate!="' + $(this).val() + '"]').hide().attr('disabled',
-                      'disabled');
-                  $('#cities option[data-governorate="' + $(this).val() + '"]').map(function() {
-                      $(this).show().removeAttr('disabled');
-                      });
-    });
-  });
-
+</body>
+<script type="text/javascript">
+    $(function () {
+          var table = $('#myTable').DataTable({
+              processing: true,
+              serverSide: true,
+              ajax: "{{ route('admin.products.index') }}",
+              columns: [
+                  {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                  {data: 'name', name: 'name'},
+                  {data: 'description', name: 'description'},
+                  {data: 'action', name: 'action', orderable: false, searchable: false},
+          ],
+          });
+        });
 </script>
-@endpush
+</html>
 @endsection
