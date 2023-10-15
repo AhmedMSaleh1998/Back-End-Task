@@ -30,8 +30,10 @@ class ProductController extends BaseController
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                        $btn = '<a href="edit/'.$row->id.'" class="edit btn btn-info btn-sm">Edit</a>';
-                           $btn = $btn.'<a href="delete/'.$row->id.'" class="delete btn btn-danger btn-sm">Delete</a>';
+                        $btn = '<a href="edit/'.$row->id.'" class="edit btn btn-info btn-sm">Edit</a> ';
+                           $btn .= '<button type="button" data-action="'.route('admin.products.delete' , $row->id).'" class="delete-btn btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                           Delete
+                         </button>';
                             return $btn;
 
                 })

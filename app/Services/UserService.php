@@ -155,4 +155,10 @@ class UserService extends BaseService
         $newProductData = $request->all();
         $data = $oldProductData->update($newProductData);
     }
+
+    public function store($request){
+        $user = $request->all();
+        $user['password'] = bcrypt($request->password);
+        $this->repository->store($user);
+    }
 }

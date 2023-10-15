@@ -12,25 +12,28 @@
 </head>
 <body>
 <div class="container mt-5">
-    <h2 class="mb-4">User Products</h2>
+    <h2 class="mb-4">User Data</h2>
     <table id="myTable" class="table table-bordered">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Description</th>
+                <th>first name</th>
+                <th>last name</th>
+                <th>email</th>
+                <th>phone</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($user->products as $product)
+
             <tr>
-                <td>{{$product->name}}</td>
-                <td>{{$product->description}}</td>
+                <td>{{$user->firstname}}</td>
+                <td>{{$user->lastname}}</td>
+                <td>{{$user->email}}</td>
+                <td>{{$user->phone}}</td>
             </td>
-            @endforeach
         </tbody>
     </table>
 </div>
-
+<a href="{{route('user.edit.profile')}}" class="btn btn-danger">Edit Password</a>
 </body>
 {{-- <script type="text/javascript">
     $(function () {

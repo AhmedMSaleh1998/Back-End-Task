@@ -32,8 +32,10 @@ class UserController extends BaseController
                 ->addColumn('action', function($row){
                         $btn = '<a href="edit/'.$row->id.'" class="edit btn btn-info btn-sm">Edit</a>';
                         $btn = $btn.'<a href="show/'.$row->id.'" class="show btn btn-primary btn-sm">Show</a>';
-                        $btn = $btn.'<a href="products/'.$row->id.'" class="show btn btn-dark btn-sm">Products</a>';
-                           $btn = $btn.'<a href="delete/'.$row->id.'" class="delete btn btn-danger btn-sm">Delete</a>';
+                        $btn = $btn.'<a href="'.route('admin.users.products' , $row->id).'" class="show btn btn-dark btn-sm">Products</a>';
+                        $btn .= '<button type="button" data-action="'.route('admin.products.delete' , $row->id).'" class="delete-btn btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                        Delete
+                      </button>';
                             return $btn;
 
                 })
@@ -124,21 +126,8 @@ class UserController extends BaseController
     public function products($id)
     {
         try{
-            if(\request()->ajax()){
-                $user = $User::find($id);
-                return DataTables::of($user->products)
-                    ->addIndexColumn()
-                    ->addColumn('action', function($row){
-                            $btn = '<a href="edit/'.$row->id.'" class="edit btn btn-info btn-sm">Edit</a>';
-                            $btn = $btn.'<a href="show/'.$row->id.'" class="show btn btn-primary btn-sm">Show</a>';
-                               $btn = $btn.'<a href="delete/'.$row->id.'" class="delete btn btn-danger btn-sm">Delete</a>';
-                                return $btn;
-
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
-            }
-            return view('admin.users.index');
+            $user=$this->service->find('id',$id);
+            return view('admin.users.products',compact('user'));
 
         } catch (Exception $exception) {
             return $exception;

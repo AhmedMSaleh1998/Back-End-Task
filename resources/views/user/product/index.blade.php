@@ -1,4 +1,4 @@
-@extends('admin.layout.layout')
+@extends('user.layout.layout')
 @section('content')
 <html>
 <head>
@@ -13,14 +13,12 @@
 <body>
 <div class="container mt-5">
     <h2 class="mb-4">Products</h2>
-    <a class="btn btn-info" href="{{route('admin.products.create')}}">Create Product</a>
     <table id="myTable" class="table table-bordered">
         <thead>
             <tr>
                 <th>No</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -58,12 +56,11 @@
           var table = $('#myTable').DataTable({
               processing: true,
               serverSide: true,
-              ajax: "{{ route('admin.products.index') }}",
+              ajax: "{{ route('user.products.index') }}",
               columns: [
                   {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                   {data: 'name', name: 'name'},
                   {data: 'description', name: 'description'},
-                  {data: 'action', name: 'action', orderable: false, searchable: false},
           ],
           });
         });

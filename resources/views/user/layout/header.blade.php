@@ -188,7 +188,7 @@
           <img src={{ asset("dist/img/user2-160x160.jpg") }} class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{ auth('admin')->user()->name }}</a>
+          <a href="{{route('user.profile')}}" class="d-block">profile</a>
         </div>
       </div>
 
@@ -213,49 +213,15 @@
             <a href="pages/widgets.html" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Users
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="{{route('admin.users.index')}}" class="nav-link">
-                    <i class="fa fa-eye"></i>
-                    <p>view</p>
-                  </a>
-                </li>
-              </ul>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
                 Products
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="{{route('admin.products.index')}}" class="nav-link">
+                  <a href="{{route('user.products.index')}}" class="nav-link">
                     <i class="fa fa-eye"></i>
                     <p>view</p>
-                  </a>
-                </li>
-              </ul>
-          </li>
-          <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Assign Products
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="{{route('assign.create')}}" class="nav-link">
-                    <i class="fa fa-plus"></i>
-                    <p>New</p>
                   </a>
                 </li>
               </ul>

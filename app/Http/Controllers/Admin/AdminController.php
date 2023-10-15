@@ -11,14 +11,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\Datatables\Datatables;
+use App\Services\ProductService;
 
 class AdminController extends Controller
 {
-    public function __construct(ProductService $service)
-    {
-        parent::__construct($service);
-    }
-
     public function login(){
         return view('admin.auth.login');
     }
@@ -29,7 +25,7 @@ class AdminController extends Controller
 
             if (auth('admin')->attempt($credentials, $remember_me)) {
                 $request->session()->regenerate();
-                return redirect (route('admin.index'));
+                return redirect(route('admin.index'));
 
             }
             return back()->with(['error' => 'Your data is wrong']);

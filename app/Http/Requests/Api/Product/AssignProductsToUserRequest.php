@@ -26,7 +26,7 @@ class AssignProductsToUserRequest extends FormRequest
         return [
             'user_id'  => 'required|exists:users,id',
             "products"    => "required|array",
-            "products.*"  => "required|exists:products,id|unique:product_user,product_id,' .$user_id,",
+            "products.*"  => "required|exists:products,id|unique:product_user,product_id,' .$this->user_id,",
         ];
     }
 }

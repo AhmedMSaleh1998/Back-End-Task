@@ -56,5 +56,6 @@ class ProductService extends BaseService
     public function destroy($id){
         $product = $this->repository->find('id' , $id);
         unlink(public_path('images/products/' . $product->image));
+        $product->delete();
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class adminLoginRequest extends FormRequest
+class AssignProductToUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +22,9 @@ class adminLoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email'    => 'required|exists:admins,email',
-            'password' => 'required',
+            'user_id'  => 'required|exists:users,id',
+            "products"    => "required|array",
+            "products.*"  => "required|exists:products,id|unique:product_user,product_id,' .$this->user_id,",
         ];
     }
 }
